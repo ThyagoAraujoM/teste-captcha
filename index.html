@@ -35,11 +35,11 @@
       <!-- <form id="demo-form"> -->
         <input type="text" id="js-token-input" placeholder="Token" onkeyup="handleToken()"  />
         <input type="text" id="js-secret-input" placeholder="Secret" onkeyup="handleSecret()"/>
-        <button id="js-recaptcha-v2" class="g-recaptcha" data-sitekey="6LfL7ekpAAAAAEhX_CL0KP_nEwoLJXpdqM-GOLR2" data-callback="handleCaptcha" data-action="submit">Submit V2</button>
+        <button id="js-recaptcha-v2" class="g-recaptcha" data-sitekey="6LfL7ekpAAAAAKlAy7y6_3lcl-E7YSNaoKSXYYE3" data-callback="handleCaptcha" data-action="submit">Submit V2</button>
         <button class="g-recaptcha" onclick="handleForm()">Submit V3</button>
       <!-- </form> -->
     </div>
-    <script id="js-script-captcha" src="https://www.google.com/recaptcha/api.js?render=6LfL7ekpAAAAAEhX_CL0KP_nEwoLJXpdqM-GOLR2"></script>
+    <script id="js-script-captcha" src="https://www.google.com/recaptcha/api.js?render=6LfL7ekpAAAAAKlAy7y6_3lcl-E7YSNaoKSXYYE3"></script>
     <script>
       let token = "";
       let secret = "";
@@ -61,7 +61,7 @@
         // scriptCaptcha.src = "https://www.google.com/recaptcha/api.js?render=" +secret;
         console.log('teste');
         grecaptcha.ready(function () {
-          grecaptcha.execute('6LfL7ekpAAAAAEhX_CL0KP_nEwoLJXpdqM-GOLR2', { action: "submit" }).then(async function (token) {
+          grecaptcha.execute('6LfL7ekpAAAAAKlAy7y6_3lcl-E7YSNaoKSXYYE3', { action: "submit" }).then(async function (token) {
             console.log(response);
             // let options = {
             //   method: "POST",
