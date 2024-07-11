@@ -33,26 +33,33 @@
   <body>
     <div class="align-form">
       <form id="demo-form">
-        <input type="text" placeholder="Nome" />
-        <input type="text" placeholder="Telefone" />
-        <input type="text" placeholder="email" />
-        <!-- <button class="g-recaptcha" data-sitekey="6LfL7ekpAAAAAKlAy7y6_3lcl-E7YSNaoKSXYYE3" data-callback="handleCaptcha" data-action="submit">Submit</button> -->
-        <button class="g-recaptcha" type="button" onclick="handleForm()">Submit</button>
+        <input type="text" placeholder="Token" onchange="(e)=>{handleToken(e.target.value)}"/>
+        <input type="text" placeholder="Secret" onchange="(e)=>{handleSecret(e.target.value)}"/>
+        <button id="js-recaptcha-v2" class="g-recaptcha" data-sitekey="6LfL7ekpAAAAAKlAy7y6_3lcl-E7YSNaoKSXYYE3" data-callback="handleCaptcha" data-action="submit">Submit V2</button>
+        <button class="g-recaptcha" type="button" onclick="handleForm()">Submit V3</button>
       </form>
     </div>
     <script>
-      function handleCaptcha() {
-        // document.getElementById("demo-form").submit();
-        console.log("handleCaptcha");
+      let token = "";
+      let secret = "";
+
+      function handleToken(newToken) {
+        token = newToken;
       }
+
+      function handleSecret(newSecret) {
+        secret = newSecret;
+        document.querySelector("#js-recaptcha-v2").setAttribute("data-siteKey",newSecret);
+      }
+
       function handleForm() {
         grecaptcha.ready(function () {
-          grecaptcha.execute("6LfL7ekpAAAAAKlAy7y6_3lcl-E7YSNaoKSXYYE3", { action: "submit" }).then(async function (token) {
+          grecaptcha.execute(secret, { action: "submit" }).then(async function (token) {
             let options = {
               method: "POST",
               headers: new Headers({ "Content-Type": "application" }),
               body: JSON.stringify({
-                segredo: "6LfL7ekpAAAAAEhX_CL0KP_nEwoLJXpdqM-GOLR2",
+                segredo: secret,
                 resposta: token,
               }),
             };
@@ -64,6 +71,7 @@
         });
       }
     </script>
+    <!-- V2 ? -->
     <script src="https://www.google.com/recaptcha/api.js?render=6LfL7ekpAAAAAKlAy7y6_3lcl-E7YSNaoKSXYYE3"></script>
   </body>
 </html>
