@@ -33,8 +33,8 @@
   <body>
     <div class="align-form">
       <form id="demo-form">
-        <input type="text" placeholder="Token" onkeyup="handleToken"/>
-        <input type="text" placeholder="Secret" onkeyup="handleSecret"/>
+        <input type="text" id="js-token-input" placeholder="Token" onkeyup="handleToken" on />
+        <input type="text" id="js-secret-input" placeholder="Secret" onkeyup="handleSecret"/>
         <button id="js-recaptcha-v2" class="g-recaptcha" data-sitekey="6LfL7ekpAAAAAKlAy7y6_3lcl-E7YSNaoKSXYYE3" data-callback="handleCaptcha" data-action="submit">Submit V2</button>
         <button class="g-recaptcha" type="button" onclick="handleForm()">Submit V3</button>
       </form>
@@ -43,15 +43,16 @@
       let token = "";
       let secret = "";
 
-      function handleToken(newToken) {
-        console.log(newToken);
-        token = newToken;
+      function handleToken() {
+        let input = document.getElementById("js-token-input");
+        console.log(input.value)
+        token = input.value;
       }
 
-      function handleSecret(newSecret) {
-        console.log(newSecret);
-        secret = newSecret;
-        document.querySelector("#js-recaptcha-v2").setAttribute("data-siteKey",newSecret);
+      function handleSecret() {
+        let input = document.getElementById("js-secret-input");
+        secret = input.value;
+        document.querySelector("#js-recaptcha-v2").setAttribute("data-siteKey",input.value);
       }
 
       function handleForm() {
