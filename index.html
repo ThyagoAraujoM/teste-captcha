@@ -45,7 +45,6 @@
 
       function handleToken() {
         let input = document.getElementById("js-token-input");
-        console.log(input.value)
         token = input.value;
       }
 
@@ -56,6 +55,9 @@
       }
 
       function handleForm() {
+        let scriptCaptcha = document.createElement("#js-script-captcha");
+        scriptCaptcha.src = "https://www.google.com/recaptcha/api.js?render=" +secret;
+
         grecaptcha.ready(function () {
           grecaptcha.execute(secret, { action: "submit" }).then(async function (token) {
             let options = {
@@ -75,6 +77,6 @@
       }
     </script>
     <!-- V2 ? -->
-    <script src="https://www.google.com/recaptcha/api.js?render=6LfL7ekpAAAAAKlAy7y6_3lcl-E7YSNaoKSXYYE3"></script>
+    <script id="js-script-captcha" src="https://www.google.com/recaptcha/api.js"></script>
   </body>
 </html>
