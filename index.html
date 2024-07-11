@@ -33,10 +33,18 @@
   <body>
     <div class="align-form">
       <!-- <form id="demo-form"> -->
-        <input type="text" id="js-token-input" placeholder="Token" onkeyup="handleToken()"  />
-        <input type="text" id="js-secret-input" placeholder="Secret" onkeyup="handleSecret()"/>
-        <button id="js-recaptcha-v2" class="g-recaptcha" data-sitekey="6LfL7ekpAAAAAKlAy7y6_3lcl-E7YSNaoKSXYYE3" data-callback="handleCaptcha" data-action="submit">Submit V2</button>
-        <button class="g-recaptcha" onclick="handleForm()">Submit V3</button>
+      <input type="text" id="js-token-input" placeholder="Token" onkeyup="handleToken()" />
+      <input type="text" id="js-secret-input" placeholder="Secret" onkeyup="handleSecret()" />
+      <button
+        id="js-recaptcha-v2"
+        class="g-recaptcha"
+        data-sitekey="6LfL7ekpAAAAAKlAy7y6_3lcl-E7YSNaoKSXYYE3"
+        data-callback="handleCaptcha"
+        data-action="submit"
+      >
+        Submit V2
+      </button>
+      <button class="g-recaptcha" onclick="handleForm()">Submit V3</button>
       <!-- </form> -->
     </div>
     <script id="js-script-captcha" src="https://www.google.com/recaptcha/api.js?render=6LfL7ekpAAAAAKlAy7y6_3lcl-E7YSNaoKSXYYE3"></script>
@@ -46,40 +54,62 @@
 
       function handleToken() {
         let input = document.getElementById("js-token-input");
-        console.log(input.value)
+        console.log(input.value);
         token = input.value;
       }
 
       function handleSecret() {
         let input = document.getElementById("js-secret-input");
         secret = input.value;
-        document.querySelector("#js-recaptcha-v2").setAttribute("data-siteKey",input.value);
+        document.querySelector("#js-recaptcha-v2").setAttribute("data-siteKey", input.value);
       }
 
       function handleForm() {
         // let scriptCaptcha = document.query("#js-script-captcha");
         // scriptCaptcha.src = "https://www.google.com/recaptcha/api.js?render=" +secret;
-        console.log('teste');
+        console.log("teste");
         grecaptcha.ready(function () {
-          grecaptcha.execute('6LfL7ekpAAAAAKlAy7y6_3lcl-E7YSNaoKSXYYE3', { action: "submit" }).then(async function (token) {
-           
-            let options = {
+          grecaptcha.execute("6LfL7ekpAAAAAKlAy7y6_3lcl-E7YSNaoKSXYYE3", { action: "submit" }).then(async function (token) {
+            const form = new FormData();
+            form.append("secret", "6LfL7ekpAAAAAEhX_CL0KP_nEwoLJXpdqM-GOLR2");
+            form.append("response", token);
+
+            const options = {
               method: "POST",
-              headers: new Headers({ "Content-Type": "application" }),
-              body: JSON.stringify({
-                segredo: '6LfL7ekpAAAAAEhX_CL0KP_nEwoLJXpdqM-GOLR2',
-                resposta: token,
-              }),
+              headers: {
+                "Content-Type": "multipart/form-data; boundary=---011000010111000001101001",
+                "^sec-ch-ua": "^\^Not/A",
+                "^sec-ch-ua-platform": "^\^Windows^^^",
+                Referer: "http://localhost/",
+                "sec-ch-ua-mobile": "?0",
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+              },
             };
 
-            let response = await fetch("https://www.google.com/recaptcha/api/siteverify", options);
-            let data = await response.json();
-            console.log(token, data); 
+            options.body = form;
+
+            fetch("https://www.google.com/recaptcha/api/siteverify", options)
+              .then((response) => response.json())
+              .then((response) => console.log(response))
+              .catch((err) => console.error(err));
+
+            // let formData = new FormData();
+            // formData.append('secret', '6LfL7ekpAAAAAKlAy7y6_3lcl-E7YSNaoKSXYYE3');
+            // formData.append('response', token);
+
+            // let options = {
+            //   method: "POST",
+            //   // headers: new Headers({ "Content-Type": "multipart/form-data" }),
+            //   body: formData
+            // };
+
+            // let response = await fetch("https://www.google.com/recaptcha/api/siteverify", options);
+            // let data = await response.json();
+            // console.log(token, data);
           });
         });
       }
     </script>
     <!-- V2 ? -->
-    
   </body>
 </html>
