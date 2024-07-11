@@ -39,12 +39,14 @@
         <button class="g-recaptcha" type="button" onclick="handleForm()">Submit V3</button>
       </form>
     </div>
+    <script id="js-script-captcha" src="https://www.google.com/recaptcha/api.js?render=6LfL7ekpAAAAAEhX_CL0KP_nEwoLJXpdqM-GOLR2"></script>
     <script>
       let token = "";
       let secret = "";
 
       function handleToken() {
         let input = document.getElementById("js-token-input");
+        console.log(input.value)
         token = input.value;
       }
 
@@ -55,17 +57,17 @@
       }
 
       function handleForm() {
-        let scriptCaptcha = document.createElement("#js-script-captcha");
-        scriptCaptcha.src = "https://www.google.com/recaptcha/api.js?render=" +secret;
+        // let scriptCaptcha = document.query("#js-script-captcha");
+        // scriptCaptcha.src = "https://www.google.com/recaptcha/api.js?render=" +secret;
 
         grecaptcha.ready(function () {
-          grecaptcha.execute(secret, { action: "submit" }).then(async function (token) {
+          grecaptcha.execute('6LfL7ekpAAAAAEhX_CL0KP_nEwoLJXpdqM-GOLR2', { action: "submit" }).then(async function (token) {
             let options = {
               method: "POST",
               headers: new Headers({ "Content-Type": "application" }),
               body: JSON.stringify({
                 segredo: secret,
-                resposta: token,
+                resposta: '6LfL7ekpAAAAAKlAy7y6_3lcl-E7YSNaoKSXYYE3',
               }),
             };
 
@@ -77,6 +79,6 @@
       }
     </script>
     <!-- V2 ? -->
-    <script id="js-script-captcha" src="https://www.google.com/recaptcha/api.js"></script>
+    
   </body>
 </html>
