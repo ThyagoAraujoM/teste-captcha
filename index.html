@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        background-color: #3d3d3d;
+      }
+      .align-form {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .g-recaptcha {
+        padding: 10px 20px;
+        border-radius: 5px;
+        background-color: #4d4d4d;
+        font-size: 18px;
+        font-weight: bold;
+        color: #fff;
+        cursor: pointer;
+        border: 1px solid white;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="align-form">
+      <form id="demo-form">
+        <input type="text" placeholder="Nome" />
+        <input type="text" placeholder="Telefone" />
+        <input type="text" placeholder="email" />
+        <!-- <button class="g-recaptcha" data-sitekey="6LfL7ekpAAAAAKlAy7y6_3lcl-E7YSNaoKSXYYE3" data-callback="handleCaptcha" data-action="submit">Submit</button> -->
+        <button class="g-recaptcha" type="button" onclick="handleForm()">Submit</button>
+      </form>
+    </div>
+    <script>
+      function handleCaptcha() {
+        // document.getElementById("demo-form").submit();
+        console.log("handleCaptcha");
+      }
+      function handleForm() {
+        grecaptcha.ready(function () {
+          grecaptcha.execute("6LfL7ekpAAAAAKlAy7y6_3lcl-E7YSNaoKSXYYE3", { action: "submit" }).then(async function (token) {
+            let options = {
+              method: "POST",
+              headers: new Headers({ "Content-Type": "application" }),
+              body: JSON.stringify({
+                segredo: "6LfL7ekpAAAAAEhX_CL0KP_nEwoLJXpdqM-GOLR2",
+                resposta: token,
+              }),
+            };
+
+            let response = await fetch("https://www.google.com/recaptcha/api/siteverify", options);
+            // let data = await response.json();
+            console.log(response);
+          });
+        });
+      }
+    </script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LfL7ekpAAAAAKlAy7y6_3lcl-E7YSNaoKSXYYE3"></script>
+  </body>
+</html>
