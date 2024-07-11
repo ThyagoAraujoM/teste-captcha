@@ -44,10 +44,12 @@
       let secret = "";
 
       function handleToken(newToken) {
+        console.log(newToken);
         token = newToken;
       }
 
       function handleSecret(newSecret) {
+        console.log(newSecret);
         secret = newSecret;
         document.querySelector("#js-recaptcha-v2").setAttribute("data-siteKey",newSecret);
       }
