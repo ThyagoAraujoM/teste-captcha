@@ -70,42 +70,15 @@
         console.log("teste");
         grecaptcha.ready(function () {
           grecaptcha.execute("6LfL7ekpAAAAAKlAy7y6_3lcl-E7YSNaoKSXYYE3", { action: "submit" }).then(async function (token) {
-            const form = new FormData();
-            form.append("secret", "6LfL7ekpAAAAAEhX_CL0KP_nEwoLJXpdqM-GOLR2");
-            form.append("response", token);
-
-            const options = {
+            const response = await fetch(`https://www.google.com/recaptcha/api/siteverify`, {
               method: "POST",
               headers: {
-                "Content-Type": "multipart/form-data; boundary=---011000010111000001101001",
-                "^sec-ch-ua": "^\^Not/A",
-                "^sec-ch-ua-platform": "^\^Windows^^^",
-                Referer: "http://localhost/",
-                "sec-ch-ua-mobile": "?0",
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+                "Content-Type": "application/x-www-form-urlencoded",
               },
-            };
+              body: `secret=6LfL7ekpAAAAAKlAy7y6_3lcl-E7YSNaoKSXYYE3&response=${token}`,
+            });
 
-            options.body = form;
-
-            fetch("https://www.google.com/recaptcha/api/siteverify", options)
-              .then((response) => response.json())
-              .then((response) => console.log(response))
-              .catch((err) => console.error(err));
-
-            // let formData = new FormData();
-            // formData.append('secret', '6LfL7ekpAAAAAKlAy7y6_3lcl-E7YSNaoKSXYYE3');
-            // formData.append('response', token);
-
-            // let options = {
-            //   method: "POST",
-            //   // headers: new Headers({ "Content-Type": "multipart/form-data" }),
-            //   body: formData
-            // };
-
-            // let response = await fetch("https://www.google.com/recaptcha/api/siteverify", options);
-            // let data = await response.json();
-            // console.log(token, data);
+            const data = await response.json();
           });
         });
       }
